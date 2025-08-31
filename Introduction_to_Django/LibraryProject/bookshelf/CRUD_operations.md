@@ -11,10 +11,10 @@ Type "help", "copyright", "credits" or "license" for more information.
 ('1984', 'George Orwell', 1949)
 >>>
 >>> book = Book.objects.get(title="1984")
->>> book.title = "New Name of the book"
+>>> book.title = "Nineteen Eighty-Four"
 >>> book.save()
 >>> book.title
-'New Name of the book'
+'Nineteen Eighty-Four'
 >>> book.delete()
 (1, {'bookshelf.Book': 1})
 >>> Book.objects.all()
