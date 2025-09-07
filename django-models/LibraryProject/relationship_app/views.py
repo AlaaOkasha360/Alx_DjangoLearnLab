@@ -2,6 +2,7 @@ from typing import Any
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import Library, Book
