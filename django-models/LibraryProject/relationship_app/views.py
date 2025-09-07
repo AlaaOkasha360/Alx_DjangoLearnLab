@@ -20,7 +20,7 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         library = self.get_object()
 
-class SignUpView(CreateView):
+class RegisterView(CreateView):
     form_class = UserCreationForm
     template_name = 'relationship_app/register.html'
     success_url = reverse_lazy('login')
