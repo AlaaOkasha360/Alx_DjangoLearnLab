@@ -1,9 +1,16 @@
 from django.contrib import admin
-from .models import Book, CustomUser, CustomUserAdmin
-# Register your models here.
+from django.contrib.auth.admin import UserAdmin
+from .models import Book, CustomUser
+
+
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    model = CustomUser
+    list_display = ("username", "email", "date_of_birth", "is_staff")
+
+
+@admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'publication_year')
-    list_filter = ('title', 'author', 'publication_year')
-    search_fields = ('title', 'author')
-admin.site.register(Book, BookAdmin)
-admin.site.register(CustomUser, CustomUserAdmin)
+    list_display = ("title", "author", "publication_year")
+    list_filter = ("title", "author", "publication_year")
+    search_fields = ("title", "author")
