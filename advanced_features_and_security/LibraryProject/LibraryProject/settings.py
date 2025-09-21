@@ -146,3 +146,20 @@ SESSION_COOKIE_SECURE = True
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'",)
+
+# ===============================
+# HTTPS & SECURITY CONFIGURATION
+# ===============================
+
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True  
+
+# HTTP Strict Transport Security (HSTS)
+# 31536000 seconds = 1 year
+SECURE_HSTS_SECONDS = 31536000  
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  
+SECURE_HSTS_PRELOAD = True  
+
+# NOTE:
+# These settings should only be enforced in PRODUCTION.
+# During local development (HTTP), SECURE_SSL_REDIRECT may cause redirect loops.
