@@ -3,8 +3,16 @@ from django.contrib.auth.decorators import permission_required
 from django.db.models import Q
 from django.shortcuts import render
 from .models import Book
-from .forms import BookSearchForm
+from .forms import BookSearchForm, ExampleForm
 # Create your views here.
+
+def form_example(request):
+    form = ExampleForm(request.POST or None)
+    if form.is_valid():
+        query = form.cleaned_data.get("query")
+        return render(request, "bookshelf/form_example.html", {"form": form, "query": query})
+
+    return render(request, "bookshelf/form_example.html", {"form": form})
 
 
 @permission_required('bookshelf.can_view', raise_exception=True)
