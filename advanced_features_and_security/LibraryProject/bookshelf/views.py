@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import permission_required
 from django.db.models import Q
 from django.shortcuts import render
 from .models import Book
-from .forms import BookSearchForm, ExampleForm
+from .forms import ExampleForm, BookSearchForm 
 # Create your views here.
 
 def form_example(request):
