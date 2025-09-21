@@ -160,6 +160,9 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True  
 SECURE_HSTS_PRELOAD = True  
 
+# Tell Django to trust the X-Forwarded-Proto header for HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # NOTE:
 # These settings should only be enforced in PRODUCTION.
 # During local development (HTTP), SECURE_SSL_REDIRECT may cause redirect loops.
