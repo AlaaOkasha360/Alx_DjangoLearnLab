@@ -55,7 +55,7 @@ ROOT_URLCONF = "django_blog.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -75,12 +75,12 @@ WSGI_APPLICATION = "django_blog.wsgi.application"
 
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'BlogDB',
-            'USER': 'root',
-            'PASSWORD': 'mypassword123',
-            'HOST': 'localhost',
-            'PORT': '3306',
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "BlogDB",
+        "USER": "root",
+        "PASSWORD": "Al@09#12",
+        "HOST": "localhost",
+        "PORT": "3306",
     }
 }
 
@@ -124,8 +124,11 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "blog/static",
 ]
+
+LOGIN_REDIRECT_URL = "profile"
+LOGOUT_REDIRECT_URL = "login"
