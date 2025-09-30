@@ -75,8 +75,12 @@ WSGI_APPLICATION = "django_blog.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'BlogDB',
+            'USER': 'root',
+            'PASSWORD': 'mypassword123',
+            'HOST': 'localhost',
+            'PORT': '3306',
     }
 }
 
@@ -123,5 +127,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "blog/static",
 ]
