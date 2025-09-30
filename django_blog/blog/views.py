@@ -66,69 +66,75 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = "blog/post_confirm_delete.html"
     success_url = reverse_lazy("post-list")
 
+
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
-    template_name = 'blog/comment_form.html'  # fallback if user visits create page directly
+    template_name = (
+        "blog/comment_form.html"  # fallback if user visits create page directly
+    )
 
     def form_valid(self, form):
-        post = get_object_or_404(Post, pk=self.kwargs.get('post_pk'))
+        post = get_object_or_404(Post, pk=self.kwargs.get("post_pk"))
         form.instance.post = post
         form.instance.author = self.request.user
         self.object = form.save()
         # Redirect back to post detail and jump to comments section
-        return HttpResponseRedirect(post.get_absolute_url() + '#comments')
+        return HttpResponseRedirect(post.get_absolute_url() + "#comments")
+
 
 # Update comment (only author)
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     form_class = CommentForm
-    template_name = 'blog/comment_form.html'
+    template_name = "blog/comment_form.html"
 
     def get_success_url(self):
-        return self.object.post.get_absolute_url() + '#comments'
+        return self.object.post.get_absolute_url() + "#comments"
+
 
 # Delete comment (only author)
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
-    template_name = 'blog/comment_confirm_delete.html'
+    template_name = "blog/comment_confirm_delete.html"
 
     def get_success_url(self):
-        return self.object.post.get_absolute_url() + '#comments'
-class TagPostListView(ListView):
+        return self.object.post.get_absolute_url() + "#comments"
+
+
+class PostByTagListView(ListView):
     model = Post
-    template_name = 'blog/post_list.html'   # reuse list template
-    context_object_name = 'posts'
+    template_name = "blog/post_list.html"  # reuse list template
+    context_object_name = "posts"
     paginate_by = 10
 
     def get_queryset(self):
-        tag_name = self.kwargs.get('tag_name')
+        tag_name = self.kwargs.get("tag_name")
         # filter by tag name (exact or case-insensitive)
         return Post.objects.filter(tags__name__iexact=tag_name).distinct()
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['active_tag'] = self.kwargs.get('tag_name')
+        ctx["active_tag"] = self.kwargs.get("tag_name")
         return ctx
 
-class SearchResultsView(ListView):
+
+class search_posts(ListView):
     model = Post
-    template_name = 'blog/search_results.html'
-    context_object_name = 'posts'
+    template_name = "blog/search_results.html"
+    context_object_name = "posts"
     paginate_by = 10
 
     def get_queryset(self):
-        q = self.request.GET.get('q', '').strip()
+        q = self.request.GET.get("q", "").strip()
         if not q:
             return Post.objects.none()
         # search title, content, and tags
         return Post.objects.filter(
-            Q(title__icontains=q) |
-            Q(content__icontains=q) |
-            Q(tags__name__icontains=q)
+            Q(title__icontains=q) | Q(content__icontains=q) | Q(tags__name__icontains=q)
         ).distinct()
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['query'] = self.request.GET.get('q','')
+        ctx["query"] = self.request.GET.get("q", "")
         return ctx
