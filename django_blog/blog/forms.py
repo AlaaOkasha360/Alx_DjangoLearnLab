@@ -28,7 +28,7 @@ class PostForm(forms.ModelForm):
                     "rows": 8,
                 }
             ),
-            'tags': TagWidget(attrs={'class': 'form-control', 'placeholder': 'Add tags separated by commas'}),
+            "tags": TagWidget(),
         }
 
     def clean_title(self):
@@ -37,19 +37,26 @@ class PostForm(forms.ModelForm):
             raise forms.ValidationError("Title cannot be empty.")
         return title
 
+
 class CommentForm(forms.ModelForm):
     content = forms.CharField(
-        widget=forms.Textarea(attrs={'rows': 3, 'class': 'form-control', 'placeholder': 'Write your comment...'}),
+        widget=forms.Textarea(
+            attrs={
+                "rows": 3,
+                "class": "form-control",
+                "placeholder": "Write your comment...",
+            }
+        ),
         max_length=2000,
-        label=''
+        label="",
     )
 
     class Meta:
         model = Comment
-        fields = ['content']
+        fields = ["content"]
 
     def clean_content(self):
-        data = self.cleaned_data.get('content', '').strip()
+        data = self.cleaned_data.get("content", "").strip()
         if not data:
             raise forms.ValidationError("Comment cannot be empty.")
         return data
