@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "blog",
+    "taggit",
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "BlogDB",
         "USER": "root",
-        "PASSWORD": "mypassword123",
+        "PASSWORD": "Al@09#12",
         "HOST": "localhost",
         "PORT": "3306",
     }

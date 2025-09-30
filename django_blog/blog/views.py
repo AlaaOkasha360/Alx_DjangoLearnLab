@@ -95,3 +95,40 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return self.object.post.get_absolute_url() + '#comments'
+class TagPostListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'   # reuse list template
+    context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        tag_name = self.kwargs.get('tag_name')
+        # filter by tag name (exact or case-insensitive)
+        return Post.objects.filter(tags__name__iexact=tag_name).distinct()
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['active_tag'] = self.kwargs.get('tag_name')
+        return ctx
+
+class SearchResultsView(ListView):
+    model = Post
+    template_name = 'blog/search_results.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        q = self.request.GET.get('q', '').strip()
+        if not q:
+            return Post.objects.none()
+        # search title, content, and tags
+        return Post.objects.filter(
+            Q(title__icontains=q) |
+            Q(content__icontains=q) |
+            Q(tags__name__icontains=q)
+        ).distinct()
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['query'] = self.request.GET.get('q','')
+        return ctx
